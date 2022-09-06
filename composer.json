@@ -1,0 +1,26 @@
+{
+    "name": "wayhood/hyperf-service",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "php",
+        "hyperf"
+    ],
+    "description": "",
+    "autoload": {
+        "psr-4": {
+            "Wayhood\\Service\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">=8.0"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "hyperf": {
+            "config": "Wayhood\\Service\\ConfigProvider"
+        }
+    }
+}
