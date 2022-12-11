@@ -35,20 +35,26 @@ class BootListener implements ListenerInterface
     public function process(object $event): void
     {
         /** @var BeforeMainServerStart $event */
-        $annotationServices = $this->getAnnotationServices();		
-        $annotationServices = array_keys($annotationServices);
-
-        foreach ($annotationServices as $class) {
-             if (is_string($class)) {
-             	$reflect = new \ReflectionClass($class);
-				$interfaces = $reflect->getInterfaceNames();
-				if (count($interfaces) > 0) {
-                    if (!$this->container->has($interfaces[0])) {
-                        $classInstance = $this->container->make($class);
-                        $this->container->set($interfaces[0], $classInstance);
+        $annotationServices = $this->getAnnotationServices();
+        $sort = [];
+        foreach($annotationServices as $class => $a) {
+            $sort[$a->order][] = $class;
+        }
+        krsort($sort, SORT_NUMERIC);
+        foreach ($sort as $key => $classes) {
+            foreach($classes as $class) {
+                if (is_string($class)) {
+                    $reflect = new \ReflectionClass($class);
+                    $interfaces = $reflect->getInterfaceNames();
+                    if (count($interfaces) > 0) {
+                        if (!$this->container->has($interfaces[0])) {
+                            var_dump($class);
+                            $classInstance = $this->container->make($class);
+                            $this->container->set($interfaces[0], $classInstance);
+                        }
                     }
-				}
-             }
+                }
+            }
         }
     }
 
