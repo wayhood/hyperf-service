@@ -48,7 +48,6 @@ class BootListener implements ListenerInterface
                     $interfaces = $reflect->getInterfaceNames();
                     if (count($interfaces) > 0) {
                         if (!$this->container->has($interfaces[0])) {
-                            var_dump($class);
                             $classInstance = $this->container->make($class);
                             $this->container->set($interfaces[0], $classInstance);
                         }
