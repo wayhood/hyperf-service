@@ -12,7 +12,7 @@ class ConfigProvider
     {
         return [
             'listeners' => [
-                BootListener::class,
+                BootListener::class => 65535,
             ],
         ];
     }
